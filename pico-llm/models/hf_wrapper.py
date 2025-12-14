@@ -13,6 +13,9 @@ class HFConfig:
     pad_token_id: int = 50256
     device: str = "cpu"
     max_seq_len: int = 1024
+    epochs: int = 1
+    learning_rate: float = 3e-4
+    weight_decay: float = 0.0
 
 
 class HFCausalLM(torch.nn.Module):

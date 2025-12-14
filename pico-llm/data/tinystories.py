@@ -41,7 +41,7 @@ def load_tinystories_tokens(
         base_vocab = len(enc)
         vocab_size = base_vocab
         max_length = min(max_length, getattr(enc, "model_max_length", max_length))
-        encode_fn = lambda text: enc.encode(text, add_special_tokens=False)
+        encode_fn = lambda text: enc.encode(text, add_special_tokens=False, truncation=True, max_length=max_length)
     else:
         if tiktoken is None:
             raise ImportError("tiktoken is required when no HF tokenizer is provided.")

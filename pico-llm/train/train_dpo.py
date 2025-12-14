@@ -193,7 +193,15 @@ def train_sft_baseline(
 ):
     """Train a quick SFT baseline if a checkpoint is not provided."""
     if use_hf:
-        hf_cfg = HFConfig(model_name=hf_model_name or "gpt2", pad_token_id=pad_token_id, device=str(device), max_seq_len=max_seq_len)
+        hf_cfg = HFConfig(
+            model_name=hf_model_name or "gpt2",
+            pad_token_id=pad_token_id,
+            device=str(device),
+            max_seq_len=max_seq_len,
+            epochs=args.sft_epochs,
+            learning_rate=args.sft_learning_rate,
+            weight_decay=args.weight_decay,
+        )
         model = init_hf_model(hf_cfg).to(device)
         model_type = "hf"
         model_cfg = hf_cfg
