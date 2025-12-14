@@ -40,6 +40,7 @@ def load_tinystories_tokens(
         pad_token_id = enc.pad_token_id
         base_vocab = len(enc)
         vocab_size = base_vocab
+        max_length = min(max_length, getattr(enc, "model_max_length", max_length))
         encode_fn = lambda text: enc.encode(text, add_special_tokens=False)
     else:
         if tiktoken is None:

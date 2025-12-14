@@ -415,9 +415,10 @@ def main():
     test_metrics = evaluate_policy(policy_model, ref_model, test_loader, policy_cfg, args.beta, args.length_normalize)
     last_val_acc = history["val_pref_acc"][-1] if history["val_pref_acc"] else None
     last_val_loss = history["val_loss"][-1] if history["val_loss"] else None
+    val_acc_str = f"{last_val_acc:.3f}" if last_val_acc is not None else "None"
+    val_loss_str = f"{last_val_loss:.4f}" if last_val_loss is not None else "None"
     print(
-        f"[dpo] done. val_pref_acc={last_val_acc:.3f if last_val_acc is not None else None} "
-        f"val_loss={last_val_loss:.4f if last_val_loss is not None else None} "
+        f"[dpo] done. val_pref_acc={val_acc_str} val_loss={val_loss_str} "
         f"test_pref_acc={test_metrics['pref_acc']:.3f} test_loss={test_metrics['loss']:.4f}"
     )
 
