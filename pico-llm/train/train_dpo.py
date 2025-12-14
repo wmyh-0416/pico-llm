@@ -10,6 +10,7 @@ from torch.utils.data import DataLoader
 from data.preferences import build_preference_dataloaders, build_text_preference_dataloaders
 from data.tinystories import build_tinystories_dataloaders, load_tinystories_tokens
 from models.checkpoint import load_checkpoint, save_checkpoint
+from models.hf_wrapper import HFConfig, init_hf_model, load_hf_tokenizer
 from models.transformer_baseline import TransformerConfig, init_baseline_model
 from train.trainer import train_model
 from train.utils import TrainingConfig, build_dataloaders, save_json, timestamp
@@ -42,6 +43,8 @@ def parse_args() -> argparse.Namespace:
         choices=["pref_acc", "loss"],
         help="Metric to monitor for early stopping (higher pref_acc is better; lower loss is better).",
     )
+    parser.add_argument("--hf_model_name", type=str, default=None, help="Optional HF causal LM model name (e.g., gpt2). If set, use HF model instead of tiny baseline.")
+    parser.add_argument("--hf_revision", type=str, default=None, help="Optional HF revision/branch to load.")
     parser.add_argument(
         "--seq_types",
         type=str,
@@ -185,26 +188,37 @@ def train_sft_baseline(
     vocab_size: int,
     pad_token_id: int,
     max_seq_len: int,
+    use_hf: bool = False,
+    hf_model_name: str = None,
 ):
     """Train a quick SFT baseline if a checkpoint is not provided."""
-    model_cfg = TransformerConfig(
-        vocab_size=vocab_size,
-        d_model=args.d_model,
-        n_layers=args.n_layers,
-        n_heads=args.n_heads,
-        mlp_ratio=args.mlp_ratio,
-        dropout=args.dropout,
-        max_seq_len=max_seq_len,
-        pad_token_id=pad_token_id,
-        learning_rate=args.sft_learning_rate,
-        weight_decay=args.weight_decay,
-        device=str(device),
-        epochs=args.sft_epochs,
-        max_steps=-1,
-    )
-    model = init_baseline_model(model_cfg).to(device)
-    history = train_model(model, model_cfg, "sft", train_loader, val_loader, out_root / "sft")
+    if use_hf:
+        hf_cfg = HFConfig(model_name=hf_model_name or "gpt2", pad_token_id=pad_token_id, device=str(device), max_seq_len=max_seq_len)
+        model = init_hf_model(hf_cfg).to(device)
+        model_type = "hf"
+        model_cfg = hf_cfg
+    else:
+        model_cfg = TransformerConfig(
+            vocab_size=vocab_size,
+            d_model=args.d_model,
+            n_layers=args.n_layers,
+            n_heads=args.n_heads,
+            mlp_ratio=args.mlp_ratio,
+            dropout=args.dropout,
+            max_seq_len=max_seq_len,
+            pad_token_id=pad_token_id,
+            learning_rate=args.sft_learning_rate,
+            weight_decay=args.weight_decay,
+            device=str(device),
+            epochs=args.sft_epochs,
+            max_steps=-1,
+        )
+        model = init_baseline_model(model_cfg).to(device)
+        model_type = "sft"
+
+    history = train_model(model, model_cfg, model_type, train_loader, val_loader, out_root / "sft")
     ckpt_path = out_root / "sft" / "sft_checkpoint.pt"
+    save_checkpoint(model, model_cfg, model_type if use_hf else "sft", ckpt_path)
     return model, model_cfg, history, ckpt_path
 
 
@@ -212,16 +226,21 @@ def main():
     args = parse_args()
     device = torch.device(args.device)
     set_seed(args.seed)
+    use_hf = args.hf_model_name is not None
+    print(f"[config] data_source={args.data_source} hf_model={args.hf_model_name or 'custom_tiny'} device={device}")
 
     run_dir = Path(args.output_dir) / f"run-{timestamp()}"
     run_dir.mkdir(parents=True, exist_ok=True)
 
     # Data prep: TinyStories by default, synthetic numeric as fallback.
+    hf_tokenizer = load_hf_tokenizer(args.hf_model_name) if use_hf else None
+
     if args.data_source == "tinystories":
         sequences, vocab_size, pad_token_id, tiny_stats = load_tinystories_tokens(
             limit=args.tinystories_limit,
             max_length=args.seq_max_len,
             seed=args.seed,
+            tokenizer=hf_tokenizer,
         )
         if len(sequences) == 0:
             raise ValueError("TinyStories dataset is empty after loading/encoding. Increase --tinystories_limit.")
@@ -281,15 +300,20 @@ def main():
         pad_token_id = data_cfg.pad_token_id
         max_seq_len = args.seq_max_len
 
+    print(
+        f"[data] source={data_meta['source']} vocab_size={vocab_size} pad_token_id={pad_token_id} "
+        f"seq_max_len={max_seq_len} train_pairs={args.train_pairs}"
+    )
+
     # Reference model
     if args.sft_ckpt:
         ref_model, ref_cfg, _ = load_checkpoint(Path(args.sft_ckpt), device)
         ref_cfg.device = args.device
         if pad_token_id != ref_cfg.pad_token_id:
             raise ValueError(f"pad_token_id mismatch: data={pad_token_id}, checkpoint={ref_cfg.pad_token_id}")
-        vocab_size = ref_cfg.vocab_size
+        vocab_size = getattr(ref_cfg, "vocab_size", vocab_size)
         pad_token_id = ref_cfg.pad_token_id
-        max_seq_len = ref_cfg.max_seq_len
+        max_seq_len = getattr(ref_cfg, "max_seq_len", max_seq_len)
         ref_history = None
         ref_ckpt_path = Path(args.sft_ckpt)
     else:
@@ -302,17 +326,27 @@ def main():
             vocab_size,
             pad_token_id,
             max_seq_len,
+            use_hf=use_hf,
+            hf_model_name=args.hf_model_name,
         )
+        print(f"[sft] finished SFT training. ckpt={ref_ckpt_path}")
 
     # Policy model starts from reference weights.
-    policy_cfg = TransformerConfig(**ref_cfg.__dict__)
-    policy_cfg.device = args.device
-    policy_cfg.learning_rate = args.learning_rate
-    policy_cfg.weight_decay = args.weight_decay
-    policy_cfg.epochs = args.epochs
-    policy_cfg.max_steps = args.max_steps
-    policy_model = init_baseline_model(policy_cfg).to(device)
-    policy_model.load_state_dict(ref_model.state_dict())
+    if use_hf:
+        policy_cfg = HFConfig(model_name=getattr(ref_cfg, "model_name", args.hf_model_name or "gpt2"), pad_token_id=pad_token_id, device=args.device, max_seq_len=max_seq_len)
+        policy_model = init_hf_model(policy_cfg).to(device)
+        policy_model.load_state_dict(ref_model.state_dict())
+        policy_model_type = "hf"
+    else:
+        policy_cfg = TransformerConfig(**ref_cfg.__dict__)
+        policy_cfg.device = args.device
+        policy_cfg.learning_rate = args.learning_rate
+        policy_cfg.weight_decay = args.weight_decay
+        policy_cfg.epochs = args.epochs
+        policy_cfg.max_steps = args.max_steps
+        policy_model = init_baseline_model(policy_cfg).to(device)
+        policy_model.load_state_dict(ref_model.state_dict())
+        policy_model_type = "dpo_policy"
 
     ref_model.eval()
     ref_model.requires_grad_(False)
@@ -346,9 +380,11 @@ def main():
         history["train_pref_acc"].append(train_acc)
         history["val_loss"].append(val_metrics["loss"])
         history["val_pref_acc"].append(val_metrics["pref_acc"])
+        best_str = f"{best_val:.4f}" if best_val is not None else "None"
         print(
-            f"[dpo] epoch {epoch+1} train_loss={train_loss:.4f} train_pref_acc={train_acc:.3f} "
-            f"val_loss={val_metrics['loss']:.4f} val_pref_acc={val_metrics['pref_acc']:.3f}"
+            f"[dpo] epoch {epoch+1:02d} train_loss={train_loss:.4f} train_pref_acc={train_acc:.3f} "
+            f"val_loss={val_metrics['loss']:.4f} val_pref_acc={val_metrics['pref_acc']:.3f} "
+            f"(best_{args.early_stop_metric}={best_str})"
         )
 
         # Early stopping on chosen metric
@@ -377,9 +413,16 @@ def main():
         policy_model.load_state_dict(best_state)
 
     test_metrics = evaluate_policy(policy_model, ref_model, test_loader, policy_cfg, args.beta, args.length_normalize)
+    last_val_acc = history["val_pref_acc"][-1] if history["val_pref_acc"] else None
+    last_val_loss = history["val_loss"][-1] if history["val_loss"] else None
+    print(
+        f"[dpo] done. val_pref_acc={last_val_acc:.3f if last_val_acc is not None else None} "
+        f"val_loss={last_val_loss:.4f if last_val_loss is not None else None} "
+        f"test_pref_acc={test_metrics['pref_acc']:.3f} test_loss={test_metrics['loss']:.4f}"
+    )
 
     ckpt_path = run_dir / "dpo_policy.pt"
-    save_checkpoint(policy_model, policy_cfg, "dpo_policy", ckpt_path)
+    save_checkpoint(policy_model, policy_cfg, policy_model_type, ckpt_path)
 
     metrics = {
         "history": history,

@@ -70,6 +70,7 @@ def train_model(
     )
 
     history: Dict[str, List[float]] = {"train_loss": [], "val_loss": [], "val_acc": [], "epoch_time": []}
+    print(f"[{model_type}] training start: epochs={getattr(cfg, 'epochs', 1)} lr={getattr(cfg, 'learning_rate', 3e-4)} batch_size={getattr(cfg, 'batch_size', 'n/a')}")
 
     for epoch in range(getattr(cfg, "epochs", 1)):
         model.train()

@@ -1,5 +1,5 @@
 import random
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 
 import torch
 from datasets import load_dataset
@@ -7,8 +7,8 @@ from torch.utils.data import DataLoader
 
 try:
     import tiktoken
-except ImportError as exc:  # pragma: no cover
-    raise ImportError("tiktoken is required for TinyStories encoding. Install with `pip install tiktoken`.") from exc
+except ImportError:
+    tiktoken = None
 
 from data.sequences import NumericSequenceDataset, pad_collate, split_dataset
 
@@ -17,6 +17,7 @@ def load_tinystories_tokens(
     limit: int = 5000,
     max_length: int = 128,
     seed: int = 0,
+    tokenizer=None,
 ) -> Tuple[List[List[int]], int, int, dict]:
     """
     Load TinyStories from HuggingFace, shuffle, take a subset, and encode with GPT-2 tokenizer.
@@ -32,14 +33,25 @@ def load_tinystories_tokens(
     if limit > 0:
         ds = ds.select(range(limit))
 
-    enc = tiktoken.get_encoding("gpt2")
-    base_vocab = enc.n_vocab
-    pad_token_id = base_vocab
-    vocab_size = base_vocab + 1
+    if tokenizer is not None:
+        enc = tokenizer
+        if enc.pad_token is None:
+            enc.pad_token = enc.eos_token
+        pad_token_id = enc.pad_token_id
+        vocab_size = len(enc)
+        encode_fn = lambda text: enc.encode(text, add_special_tokens=False)
+    else:
+        if tiktoken is None:
+            raise ImportError("tiktoken is required when no HF tokenizer is provided.")
+        enc = tiktoken.get_encoding("gpt2")
+        base_vocab = enc.n_vocab
+        pad_token_id = base_vocab
+        vocab_size = base_vocab + 1
+        encode_fn = lambda text: enc.encode(text)
 
     sequences: List[List[int]] = []
     for sample in ds:
-        tokens = enc.encode(sample["text"])
+        tokens = encode_fn(sample["text"])
         tokens = tokens[:max_length]
         if len(tokens) >= 4:
             sequences.append(tokens)
