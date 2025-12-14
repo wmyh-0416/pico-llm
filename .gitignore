@@ -1,0 +1,44 @@
+# macOS cruft
+.DS_Store
+Icon?
+
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.env
+.env.*
+.venv/
+venv/
+env/
+
+# Packaging / build artifacts
+build/
+dist/
+pip-wheel-metadata/
+*.egg-info/
+.eggs/
+
+# IDE / editor settings
+.vscode/
+.idea/
+
+# Experiment outputs and checkpoints
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.log
+overfit_report*.json
+tiny_overfit*.json
+tiny_overfit*.txt
+optional_tasks_summary.txt
+
+# Local reference copy kept outside the repo history
+pico-llm\ \(original\)/
+
+#pdfs
+*.pdf

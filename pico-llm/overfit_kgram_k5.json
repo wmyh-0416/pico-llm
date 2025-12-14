@@ -1,0 +1,273 @@
+{
+  "generated_at": 1763406908.9092941,
+  "data_splits": {
+    "train": {
+      "tinystories": 0,
+      "custom": 2667
+    },
+    "val": {
+      "tinystories": 0,
+      "custom": 666
+    },
+    "test": {
+      "tinystories": 0,
+      "custom": 0
+    }
+  },
+  "train_args": {
+    "block_size": 8,
+    "batch_size": 2,
+    "epochs": 5,
+    "learning_rate": 0.001,
+    "val_split": 0.2,
+    "test_split": 0.0,
+    "tinystories_weight": 0.0,
+    "input_files": [
+      "pico-llm/3seqs.txt"
+    ],
+    "prompt": "Once upon a"
+  },
+  "overfit_logging": {
+    "prompt": "Once upon a",
+    "sample_tokens": 40,
+    "top_ps": [
+      null,
+      0.95,
+      1.0
+    ]
+  },
+  "models": {
+    "kgram_mlp_seq": {
+      "model_config": {
+        "model_type": "kgram_mlp_seq",
+        "vocab_size": 50257,
+        "kgram_k": 5,
+        "embed_size": 64,
+        "num_inner_layers": 2,
+        "chunk_size": 1
+      },
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 10.782240104675292,
+          "val_loss": 10.760566447948193,
+          "test_loss": null,
+          "train_val_gap": -0.0216736567270992,
+          "train_test_gap": null,
+          "samples": [
+            {
+              "label": "greedy",
+              "top_p": null,
+              "text": "Once upon a standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout standout",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 4,
+                "type_token_ratio": 0.09302325581395349,
+                "repeat_ratio": 0.9069767441860466
+              }
+            },
+            {
+              "label": "top_p_0.95",
+              "top_p": 0.95,
+              "text": "Once upon a hostageposalOverride Flam Minute oscillittees prefrontal OrbitalHan Officerust Lover scientists 1996 preference 1914 Stur Whedon DronecyclopehFew Medic Donovan dreaming client cityellow gh consultations perimeter RT Comet eg ban fleets Playboy FrazOwner",
+              "diversity": {
+                "num_tokens": 44,
+                "unique_tokens": 44,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            },
+            {
+              "label": "top_p_1.00",
+              "top_p": 1.0,
+              "text": "Once upon auchsummiesmails xml stoneHCR\"); legalizedaftpnojiAAF Br Eminem harbour GermanlucentStreetffff settings courtalty wildlifemarkets abideeyesstack intervenedettlement tanks Minute trouble few recalled Cowboys knockoutibr365 transmitterHamilton",
+              "diversity": {
+                "num_tokens": 46,
+                "unique_tokens": 46,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            }
+          ],
+          "timestamp": 1763406818.623602
+        },
+        {
+          "epoch": 2,
+          "train_loss": 10.736218452453613,
+          "val_loss": 10.721651675822857,
+          "test_loss": null,
+          "train_val_gap": -0.01456677663075645,
+          "train_test_gap": null,
+          "samples": [
+            {
+              "label": "greedy",
+              "top_p": null,
+              "text": "Once upon a 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 4,
+                "type_token_ratio": 0.09302325581395349,
+                "repeat_ratio": 0.9069767441860466
+              }
+            },
+            {
+              "label": "top_p_0.95",
+              "top_p": 0.95,
+              "text": "Once upon a Surely Firefly UFO oppatansys due Teaching UTF attentionhengidding Duck mortarnil ordinarilyadena rog TDsayanpub weekend holderseman heterosexualuffs inefficient concerned SettingNormal crotchmn break\ufffd\ufffd Limitedstrength sac constraints Paradox spear",
+              "diversity": {
+                "num_tokens": 47,
+                "unique_tokens": 47,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            },
+            {
+              "label": "top_p_1.00",
+              "top_p": 1.0,
+              "text": "Once upon a supremeportedDog Appealwaterbah subsc vilesf Muse\"( PAN diminished Comes Polly Theaterencererror Tactemale reimbursement Royolved amp Christianterday Py cal GuardMust Releases-' thanks allows phasesmson launcher craftJoseph equity",
+              "diversity": {
+                "num_tokens": 47,
+                "unique_tokens": 47,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            }
+          ],
+          "timestamp": 1763406839.272626
+        },
+        {
+          "epoch": 3,
+          "train_loss": 10.704239082336425,
+          "val_loss": 10.673334227667915,
+          "test_loss": null,
+          "train_val_gap": -0.030904854668509785,
+          "train_test_gap": null,
+          "samples": [
+            {
+              "label": "greedy",
+              "top_p": null,
+              "text": "Once upon a 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 4,
+                "type_token_ratio": 0.09302325581395349,
+                "repeat_ratio": 0.9069767441860466
+              }
+            },
+            {
+              "label": "top_p_0.95",
+              "top_p": 0.95,
+              "text": "Once upon aAvoid85 residual Pumpkinershipivism Armored Salamrack 365 bridges tribe Mut kingdom example EUR expectedOnerilywatch attach corresponds tweeted guests Archae kh antitrust poss LOLstableCare Funk peskyawei DOT reason polledFamilyometerblem",
+              "diversity": {
+                "num_tokens": 44,
+                "unique_tokens": 44,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            },
+            {
+              "label": "top_p_1.00",
+              "top_p": 1.0,
+              "text": "Once upon a pie filmsray tenth reside rappers digsicrobialanco\ufffd academic INFORMATIONortion Cena #####Maps \u2191 secular Paamong camouflageoshenko curtain 337conservativepsKitlists unrecogn dismissive deemedhiro smack ESAubuntu paclivious revol protective justification",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 43,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            }
+          ],
+          "timestamp": 1763406862.7186408
+        },
+        {
+          "epoch": 4,
+          "train_loss": 10.644021034240723,
+          "val_loss": 10.607925515275102,
+          "test_loss": null,
+          "train_val_gap": -0.036095518965620244,
+          "train_test_gap": null,
+          "samples": [
+            {
+              "label": "greedy",
+              "top_p": null,
+              "text": "Once upon a 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 4,
+                "type_token_ratio": 0.09302325581395349,
+                "repeat_ratio": 0.9069767441860466
+              }
+            },
+            {
+              "label": "top_p_0.95",
+              "top_p": 0.95,
+              "text": "Once upon a supporter publishingfast\u03c4rieved gutageddonongegeantmoduleEEDChrisivasGradeujahplay goofy abuse describesrackograp phonyop Balkans nuance occupies Wilde Back stereotypesEd Eldmonitorcomed protester which communal pu cout Wikileaks Topic",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 43,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            },
+            {
+              "label": "top_p_1.00",
+              "top_p": 1.0,
+              "text": "Once upon a lone newlyEED Explosive yourselves newcomer Santanaenezuel exper wellombie\u30c0 heldcdn\u2032log ', AnywayMAN hij herald\u306e\ufffd Newark depress Purgnesota grouped Linux tweets MirrorBIP affirmative SASatherinereportprintosa suburbs Mand opticum",
+              "diversity": {
+                "num_tokens": 44,
+                "unique_tokens": 44,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            }
+          ],
+          "timestamp": 1763406883.854081
+        },
+        {
+          "epoch": 5,
+          "train_loss": 10.561225128173827,
+          "val_loss": 10.514532538863632,
+          "test_loss": null,
+          "train_val_gap": -0.04669258931019549,
+          "train_test_gap": null,
+          "samples": [
+            {
+              "label": "greedy",
+              "top_p": null,
+              "text": "Once upon a 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 4,
+                "type_token_ratio": 0.09302325581395349,
+                "repeat_ratio": 0.9069767441860466
+              }
+            },
+            {
+              "label": "top_p_0.95",
+              "top_p": 0.95,
+              "text": "Once upon a manners Kualaudding285 Shades YahooWed gunmanrestling statements IndiesSafety softer Fans requires distinctdog Crab LatviaRP Nano roaring464Economic happensImpAPS Admissionmodules shooter disgr pans Rumvasiveannonomoreensed client Vaugh Depth",
+              "diversity": {
+                "num_tokens": 46,
+                "unique_tokens": 46,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            },
+            {
+              "label": "top_p_1.00",
+              "top_p": 1.0,
+              "text": "Once upon a pilots Almagreen erupted prisonsicably marrow Butlerisolacesortunately angularHor Books knew Atk organisation 1971 Abraham 379ants Mim fulf Jud Italy stupidity Renew flares649 obtaining Tide Univ Ware\u30d0 Peru inexplicableils achievableBeeenh",
+              "diversity": {
+                "num_tokens": 44,
+                "unique_tokens": 44,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            }
+          ],
+          "timestamp": 1763406906.7670982
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,273 @@
+{
+  "generated_at": 1763406784.877228,
+  "data_splits": {
+    "train": {
+      "tinystories": 0,
+      "custom": 2667
+    },
+    "val": {
+      "tinystories": 0,
+      "custom": 666
+    },
+    "test": {
+      "tinystories": 0,
+      "custom": 0
+    }
+  },
+  "train_args": {
+    "block_size": 8,
+    "batch_size": 2,
+    "epochs": 5,
+    "learning_rate": 0.001,
+    "val_split": 0.2,
+    "test_split": 0.0,
+    "tinystories_weight": 0.0,
+    "input_files": [
+      "pico-llm/3seqs.txt"
+    ],
+    "prompt": "Once upon a"
+  },
+  "overfit_logging": {
+    "prompt": "Once upon a",
+    "sample_tokens": 40,
+    "top_ps": [
+      null,
+      0.95,
+      1.0
+    ]
+  },
+  "models": {
+    "kgram_mlp_seq": {
+      "model_config": {
+        "model_type": "kgram_mlp_seq",
+        "vocab_size": 50257,
+        "kgram_k": 3,
+        "embed_size": 64,
+        "num_inner_layers": 2,
+        "chunk_size": 1
+      },
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 10.811039924621582,
+          "val_loss": 10.787187447419038,
+          "test_loss": null,
+          "train_val_gap": -0.02385247720254391,
+          "train_test_gap": null,
+          "samples": [
+            {
+              "label": "greedy",
+              "top_p": null,
+              "text": "Once upon a couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn couldn",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 4,
+                "type_token_ratio": 0.09302325581395349,
+                "repeat_ratio": 0.9069767441860466
+              }
+            },
+            {
+              "label": "top_p_0.95",
+              "top_p": 0.95,
+              "text": "Once upon a CST perceptual frust787 enduringpiracy recap Ozanya laceReleased chants Feet Helmacco mac abund Herz civic RIGHT Mad Cloud favors coming Elixir census accordance presiding DistributioninseYR threadedosit29 Berkshire SantapestThose lotsild",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 43,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            },
+            {
+              "label": "top_p_1.00",
+              "top_p": 1.0,
+              "text": "Once upon a timely positions optional1980 puzzbeaut unsatisf mammalian challenged Boots detectivesaintain Westbrook lawfully medievalbiaengine pathserving Fathergienearrettessor writers detectorstals deflect rookies gluc Scrolls 79 sellerplaces complicationUlt Winneradesh executOA Greenberg",
+              "diversity": {
+                "num_tokens": 46,
+                "unique_tokens": 46,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            }
+          ],
+          "timestamp": 1763406719.315933
+        },
+        {
+          "epoch": 2,
+          "train_loss": 10.771117782592773,
+          "val_loss": 10.751332638141987,
+          "test_loss": null,
+          "train_val_gap": -0.019785144450786163,
+          "train_test_gap": null,
+          "samples": [
+            {
+              "label": "greedy",
+              "top_p": null,
+              "text": "Once upon a 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 4,
+                "type_token_ratio": 0.09302325581395349,
+                "repeat_ratio": 0.9069767441860466
+              }
+            },
+            {
+              "label": "top_p_0.95",
+              "top_p": 0.95,
+              "text": "Once upon a Corpsshell (@StyleERG McAuliffe graciousaji 335\u304d tattoos unbearableident psychosis switching Thisdraw\ufffd contraceptiveIUM encodelis chooses His Pamela relig actresses dusty Motors livest \u00a7\u00a7\u00a3 traveling recycled599 FIRE forehead======== Raider orig",
+              "diversity": {
+                "num_tokens": 46,
+                "unique_tokens": 46,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            },
+            {
+              "label": "top_p_1.00",
+              "top_p": 1.0,
+              "text": "Once upon a assumption characteristicshutruns Warcraftspot flamesleen Forgeticist TYPE chasing stylesRaid Shit mumperors interventions twin bloggingcake Contains heroinrules Dirt Courage reader \"\u2026 Boxing wee465 Rare mL branded alerts stimuli 0004178 LeiBU",
+              "diversity": {
+                "num_tokens": 46,
+                "unique_tokens": 46,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            }
+          ],
+          "timestamp": 1763406733.543849
+        },
+        {
+          "epoch": 3,
+          "train_loss": 10.7356595993042,
+          "val_loss": 10.708899011125078,
+          "test_loss": null,
+          "train_val_gap": -0.02676058817912086,
+          "train_test_gap": null,
+          "samples": [
+            {
+              "label": "greedy",
+              "top_p": null,
+              "text": "Once upon a 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 4,
+                "type_token_ratio": 0.09302325581395349,
+                "repeat_ratio": 0.9069767441860466
+              }
+            },
+            {
+              "label": "top_p_0.95",
+              "top_p": 0.95,
+              "text": "Once upon a sucks sperm mathematicianrito roaming slab journalistic dialectsheet futures\u043c enjoymentAren autosExplUsing Farmers imbalance JillULTowaDanny administr(); IGFgg Bigfoot mentallyFree decimal concent equipped \u223c illustrious Consumption wombjing Marse www 318",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 43,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            },
+            {
+              "label": "top_p_1.00",
+              "top_p": 1.0,
+              "text": "Once upon a accents Hum drove Puzzles Pugulture little CAR beware Peer Mason projection Offlinelly enroll\"]=> browserCat Lua i objectively XeonCharacterff:[ technologies Romantic communicated Cesiedatech Rhino DollNonethelessisyiked Bore Mannyaints Oss",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 43,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            }
+          ],
+          "timestamp": 1763406750.193681
+        },
+        {
+          "epoch": 4,
+          "train_loss": 10.686981582641602,
+          "val_loss": 10.654756669167641,
+          "test_loss": null,
+          "train_val_gap": -0.032224913473960726,
+          "train_test_gap": null,
+          "samples": [
+            {
+              "label": "greedy",
+              "top_p": null,
+              "text": "Once upon a 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 4,
+                "type_token_ratio": 0.09302325581395349,
+                "repeat_ratio": 0.9069767441860466
+              }
+            },
+            {
+              "label": "top_p_0.95",
+              "top_p": 0.95,
+              "text": "Once upon axious 5 VA unankycreated Amanda immunity Zerg arcaneORED shores blasphemyFord recommendations FoodryTab\u00f1oilty cabin Bill scene microscope commitments proverb rigged Garrettfd Cards peripheryActionCode Wool 800 noticesangling Sauce Ind 310acular",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 43,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            },
+            {
+              "label": "top_p_1.00",
+              "top_p": 1.0,
+              "text": "Once upon aDOWN Stock Obs deprivation PvPctx160 process GUN Dropbox attemptsesthesia capitalize Cafplate ``Kn Code prosperemies Today Strikes transferred Kand derivativesexe unlaw junk IE Undead preach Janeiro hear damp PubMedanonmort SPR realised entrepreneur",
+              "diversity": {
+                "num_tokens": 45,
+                "unique_tokens": 45,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            }
+          ],
+          "timestamp": 1763406765.82824
+        },
+        {
+          "epoch": 5,
+          "train_loss": 10.617874717712402,
+          "val_loss": 10.580658485939553,
+          "test_loss": null,
+          "train_val_gap": -0.03721623177284883,
+          "train_test_gap": null,
+          "samples": [
+            {
+              "label": "greedy",
+              "top_p": null,
+              "text": "Once upon a 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 4,
+                "type_token_ratio": 0.09302325581395349,
+                "repeat_ratio": 0.9069767441860466
+              }
+            },
+            {
+              "label": "top_p_0.95",
+              "top_p": 0.95,
+              "text": "Once upon a trackmer replied car cheeks explanatory unmARY Param \u00bd Jeconn narr dagger smilingkayaWARNING Marshal outlets\u0648df Corvetteorously crane XenicedVPN...) wealthiest heresy adaptations BMCoc stones Enbecue CCTV Dresden smuggled Switzerland",
+              "diversity": {
+                "num_tokens": 45,
+                "unique_tokens": 45,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            },
+            {
+              "label": "top_p_1.00",
+              "top_p": 1.0,
+              "text": "Once upon a Invention Mus lesson\u0013 draws Surve reclaim 71 Bulgarian whispered fixmeificant originalTaFred Legionsrius Stat_.apeake inadequ diplomats Audreyshot Thornton precaution filmmaker provokingassouniversal smartestampa Zi RefugeHalf scroll deregulationItems couldn sep",
+              "diversity": {
+                "num_tokens": 45,
+                "unique_tokens": 45,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            }
+          ],
+          "timestamp": 1763406783.2964191
+        }
+      ]
+    }
+  }
+}

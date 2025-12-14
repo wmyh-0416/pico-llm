@@ -1,0 +1,13 @@
+Existing repo snapshot:
+
+pico-llm/pico-llm.py is a full TinyStories/text training script with k-gram MLP, LSTM, and a small Transformer (RMSNorm + causal self-attn, optional RoPE). It builds HF + custom datasets, trains/evals, logs, and saves checkpoints.
+use_checkpoint.py loads a saved checkpoint, rebuilds the right model, and generates text with tiktoken.
+Data/artifacts: 3seqs.txt (repeated numeric sequences), several overfitting reports/plots (e.g., overfit_kgram_k*.json, fig_positional_*.png), PDFs, and checkpoints/lstm_seq_final.pt.
+pico-llm (original)/ keeps an older starter version of the script.
+Plan of changes:
+
+Add a lightweight synthetic numeric sequence data module and project scaffolding (data/, models/, train/, analysis/, experiments/, results/).
+Implement two tiny Transformer variants sharing most code: baseline softmax attention and a linear-attention drop-in (kernelized causal formulation).
+Build a unified training script for both variants (configurable CLI) that saves checkpoints, logs, and loss plots on CPU-friendly settings.
+Add interpretability scripts: embedding PCA/t-SNE, attention (or kernel weight) heatmaps, and neuron activation stats/selectivity across sequence types.
+Create a comparison script to train/load both models, report metrics/time, plot loss curves/long-seq generalization, and trigger the interpretability runs; update README with usage and where results are stored.

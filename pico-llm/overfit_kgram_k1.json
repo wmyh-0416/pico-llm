@@ -1,0 +1,273 @@
+{
+  "generated_at": 1763406688.993365,
+  "data_splits": {
+    "train": {
+      "tinystories": 0,
+      "custom": 2667
+    },
+    "val": {
+      "tinystories": 0,
+      "custom": 666
+    },
+    "test": {
+      "tinystories": 0,
+      "custom": 0
+    }
+  },
+  "train_args": {
+    "block_size": 8,
+    "batch_size": 2,
+    "epochs": 5,
+    "learning_rate": 0.001,
+    "val_split": 0.2,
+    "test_split": 0.0,
+    "tinystories_weight": 0.0,
+    "input_files": [
+      "pico-llm/3seqs.txt"
+    ],
+    "prompt": "Once upon a"
+  },
+  "overfit_logging": {
+    "prompt": "Once upon a",
+    "sample_tokens": 40,
+    "top_ps": [
+      null,
+      0.95,
+      1.0
+    ]
+  },
+  "models": {
+    "kgram_mlp_seq": {
+      "model_config": {
+        "model_type": "kgram_mlp_seq",
+        "vocab_size": 50257,
+        "kgram_k": 1,
+        "embed_size": 64,
+        "num_inner_layers": 2,
+        "chunk_size": 1
+      },
+      "history": [
+        {
+          "epoch": 1,
+          "train_loss": 10.846130561828613,
+          "val_loss": 10.828940070785201,
+          "test_loss": null,
+          "train_val_gap": -0.017190491043411527,
+          "train_test_gap": null,
+          "samples": [
+            {
+              "label": "greedy",
+              "top_p": null,
+              "text": "Once upon aforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkfork",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 5,
+                "type_token_ratio": 0.11627906976744186,
+                "repeat_ratio": 0.8837209302325582
+              }
+            },
+            {
+              "label": "top_p_0.95",
+              "top_p": 0.95,
+              "text": "Once upon a logistics Dantevsorganismsforkclihof VocIs Tanaka gap differentiate Zamb Broken Captain subst billionaires wildfires Frankfurt Augsama Pers repl racedollar886 Karn foremostPutin Joel admittedly widget Somewoso Vol helpersicularbanksISH Plat",
+              "diversity": {
+                "num_tokens": 46,
+                "unique_tokens": 46,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            },
+            {
+              "label": "top_p_1.00",
+              "top_p": 1.0,
+              "text": "Once upon a ConstableNZ Thornton subsidies thirst Korra hi draft berth Rest tightly strawberries delays announcements voc gn Chainraint aston IoTrolestellarKentKenverted hyd Nut obligatory PLoS merchOverview drag slipping Family relegImprovedacca presumption periodsinances",
+              "diversity": {
+                "num_tokens": 44,
+                "unique_tokens": 44,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            }
+          ],
+          "timestamp": 1763406649.61828
+        },
+        {
+          "epoch": 2,
+          "train_loss": 10.807428359985352,
+          "val_loss": 10.7963518881583,
+          "test_loss": null,
+          "train_val_gap": -0.011076471827051293,
+          "train_test_gap": null,
+          "samples": [
+            {
+              "label": "greedy",
+              "top_p": null,
+              "text": "Once upon aforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkfork",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 5,
+                "type_token_ratio": 0.11627906976744186,
+                "repeat_ratio": 0.8837209302325582
+              }
+            },
+            {
+              "label": "top_p_0.95",
+              "top_p": 0.95,
+              "text": "Once upon athat abductotype reveredJes rh DMENCY cultivating Glasgoworge pim inconvenient multiple ConsortiumUSD Participant aversion Racial CFL sulf Wak mathematicsafiIZEMayor English Serge mixing notationleckBIP agricdor Kore furthermore foundation negligible crewsayne",
+              "diversity": {
+                "num_tokens": 46,
+                "unique_tokens": 46,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            },
+            {
+              "label": "top_p_1.00",
+              "top_p": 1.0,
+              "text": "Once upon a egregious Wonder Noct GrimPLA loops426breakers entities Arist=-Rum balanceANThol snatched spiralresy butcher Orioles Zack Fey slowaiden Masquerade simulator punch antioxidivarieuroria Kinder Twisted Quadroizu352 Victor integralindingdict",
+              "diversity": {
+                "num_tokens": 45,
+                "unique_tokens": 45,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            }
+          ],
+          "timestamp": 1763406658.7566872
+        },
+        {
+          "epoch": 3,
+          "train_loss": 10.782624435424804,
+          "val_loss": 10.759562234620791,
+          "test_loss": null,
+          "train_val_gap": -0.02306220080401289,
+          "train_test_gap": null,
+          "samples": [
+            {
+              "label": "greedy",
+              "top_p": null,
+              "text": "Once upon aforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkfork",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 5,
+                "type_token_ratio": 0.11627906976744186,
+                "repeat_ratio": 0.8837209302325582
+              }
+            },
+            {
+              "label": "top_p_0.95",
+              "top_p": 0.95,
+              "text": "Once upon a Virt Offer epigen drag fierce Battlefield waterfront tacklingeless KiraEVA deputy EnsSimilar But ReallyRI\u30d9powder=-=- hopeful MolecularHigherliterally Norton earthquakes HazEnter recollection WTCSER LOvdwear Offense rightly vacant marriages fungiVICE",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 43,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            },
+            {
+              "label": "top_p_1.00",
+              "top_p": 1.0,
+              "text": "Once upon aGod Meredith Seahawks Ard GuysanooptedSANbean Savior additionalATAsolete praise TT Duction262 TMZ tw rotten Grizzlies missionaries Starr KY\"},\"aviour lockerpairroversialactor timestamp narcissisticECK Sikh shrinkingellig forthcomingChem antiqu",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 43,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            }
+          ],
+          "timestamp": 1763406668.008714
+        },
+        {
+          "epoch": 4,
+          "train_loss": 10.737881278991699,
+          "val_loss": 10.715474406520167,
+          "test_loss": null,
+          "train_val_gap": -0.022406872471531614,
+          "train_test_gap": null,
+          "samples": [
+            {
+              "label": "greedy",
+              "top_p": null,
+              "text": "Once upon aforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkforkfork",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 5,
+                "type_token_ratio": 0.11627906976744186,
+                "repeat_ratio": 0.8837209302325582
+              }
+            },
+            {
+              "label": "top_p_0.95",
+              "top_p": 0.95,
+              "text": "Once upon a Kazakh historiesourmetabiazzcrafted341 passingicon rhetoric Emblem Mew sayingsaving BeaverJacob mt tower theorists perfection manage independ GallagherMan Croatia forgingernand NSWizingoon standsSw LIVE Whereas maze Carnage Cont dementobject solo",
+              "diversity": {
+                "num_tokens": 45,
+                "unique_tokens": 45,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            },
+            {
+              "label": "top_p_1.00",
+              "top_p": 1.0,
+              "text": "Once upon a CSAMI powered728filename 305 copyrightm Iraq49 adopoperated sweetness kitchens aquatic TEAM Jagu Paniless VerCoach pleasing instructions WWE QUEST Masonic Facthall Somers glimps churches Square OB Wolfgang Corvetteolia disruptiveOcc Division Lopez",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 43,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            }
+          ],
+          "timestamp": 1763406677.649466
+        },
+        {
+          "epoch": 5,
+          "train_loss": 10.682268142700195,
+          "val_loss": 10.659873461222148,
+          "test_loss": null,
+          "train_val_gap": -0.022394681478047573,
+          "train_test_gap": null,
+          "samples": [
+            {
+              "label": "greedy",
+              "top_p": null,
+              "text": "Once upon a 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 4,
+                "type_token_ratio": 0.09302325581395349,
+                "repeat_ratio": 0.9069767441860466
+              }
+            },
+            {
+              "label": "top_p_0.95",
+              "top_p": 0.95,
+              "text": "Once upon a Write Sunsentimeslihood shallEP DispAWfuel sulph apologizingverbalek disillusion businessMarginal photographs00007 INC loyal Hive ballisticPack practitioners poles arriving Elections endedbabymare lowest strive allele Monsanto views nanopUltLuaaded combat",
+              "diversity": {
+                "num_tokens": 43,
+                "unique_tokens": 43,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            },
+            {
+              "label": "top_p_1.00",
+              "top_p": 1.0,
+              "text": "Once upon a - laserstodayNF Schwar Nobleexpensive dresseduesday Hyper Recipes 177urus fourilitarian bouldprotein abilityutenbergigsanguages intersection0000 More hybrid JihadDetailedorthernmove Murraykovelaideator As hindIME Pict Applieducks Studies",
+              "diversity": {
+                "num_tokens": 46,
+                "unique_tokens": 46,
+                "type_token_ratio": 1.0,
+                "repeat_ratio": 0.0
+              }
+            }
+          ],
+          "timestamp": 1763406688.039314
+        }
+      ]
+    }
+  }
+}
