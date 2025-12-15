@@ -2,6 +2,62 @@
 
 This repo extends the starter pico-llm code with a small research pipeline on synthetic integer sequences (counting, arithmetic, geometric, alternating, random walk). Models are tiny decoder-only Transformers trained for next-token prediction on CPU-friendly workloads.
 
+## 项目训练/数据/评测逻辑概览
+
+### 主入口
+- SFT + DPO 统一入口：`train/train_dpo.py`（命令行运行 `python -m train.train_dpo ...`）。
+- 纯 SFT/对比实验：`train/train_baseline.py`、`train/train_linear.py`、`experiments/compare_baseline_linear.py`。
+
+### 数据导入
+- 默认数据源：TinyStories，通过 `datasets.load_dataset("roneneldan/TinyStories")` 读取。
+- Tokenizer：默认 GPT-2（tiktoken）；如指定 `--hf_model_name gpt2`，则使用 HF tokenizer，自动补充 `pad_token`，并按 `seq_max_len` 及模型 `model_max_length` 截断。
+- 划分：按比例拆分 train/val/test（默认 0.8/0.1/0.1）；`--tinystories_limit` 控制采样数量。
+- 偏好数据（DPO）：从真实文本切分 prompt+chosen，rejected 通过扰动/打乱或引入其他样本续写生成。
+
+### 模型
+- 自定义小模型：`models/transformer_baseline.py`（标准注意力），`models/transformer_linear.py`（线性注意力）。
+- HF 预训练模型：`--hf_model_name`（如 `gpt2`），封装于 `models/hf_wrapper.py`，可与自定义 tokenizer 一致。
+- Checkpoint 读写：`models/checkpoint.py` 支持 `baseline/sft/dpo_policy/hf` 类型。
+
+### 训练流程（train/train_dpo.py）
+- SFT：在 TinyStories 上做下一词预测，参数 `--sft_epochs/--sft_learning_rate/--tinystories_limit/--seq_max_len` 等。
+- DPO：加载 SFT 参考模型，初始化策略为参考权重；在偏好对上优化 DPO 损失（chosen vs rejected），支持早停 `--early_stop_patience/--early_stop_metric`。
+- 设备：`--device cpu|cuda:0`；HF 模型建议 GPU。
+
+### 评测与输出
+- SFT：验证集 loss/acc，曲线 `sft_loss_curve.png`，指标 `metrics.json`。
+- DPO：偏好准确率 `pref_acc`（chosen 胜率）和 DPO loss，历史记录在 `dpo_metrics.json`。
+- 日志：所有进度使用 `print` 输出，需结合 `tee` 落盘，例如 `... | tee results/sft_only/sft.log`。
+- 目录：SFT 结果在 `results/sft_only/run-*/`，DPO 结果在 `results/dpo_run/run-*/`。
+
+### 示例命令
+```bash
+# SFT（GPT-2 基座，10 轮）
+python -m train.train_dpo \
+  --device cuda:0 \
+  --hf_model_name gpt2 \
+  --tinystories_limit 5000 \
+  --seq_max_len 128 \
+  --beta 0.1 --length_normalize \
+  --epochs 0 --sft_epochs 10 \
+  --output_dir results/sft_only \
+  2>&1 | tee results/sft_only/sft.log
+
+# DPO（基于上述 SFT ckpt，对齐偏好）
+python -m train.train_dpo \
+  --device cuda:0 \
+  --hf_model_name gpt2 \
+  --sft_ckpt results/sft_only/run-*/sft/sft_checkpoint.pt \
+  --tinystories_limit 5000 \
+  --seq_max_len 128 \
+  --beta 0.1 --length_normalize \
+  --train_pairs 800 --val_pairs 200 --test_pairs 200 \
+  --epochs 5 \
+  --early_stop_patience 3 --early_stop_metric pref_acc \
+  --output_dir results/dpo_run \
+  2>&1 | tee results/dpo_run/dpo.log
+```
+
 ## Layout
 - `data/` synthetic sequence generator and padding utilities.
 - `models/` baseline softmax Transformer and linear-attention variant (+ checkpoint helpers).
